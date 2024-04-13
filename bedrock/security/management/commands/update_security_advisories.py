@@ -29,7 +29,8 @@ GIT_PULL = (GIT, 'pull', '--ff-only', 'origin', 'master')
 GIT_GET_HASH = (GIT, 'rev-parse', 'HEAD')
 
 SM_RE = re.compile('seamonkey', flags=re.IGNORECASE)
-FNULL = open(os.devnull, 'w')
+with open(os.devnull, 'w') as FNULL:
+    pass
 
 
 def fix_product_name(name):
