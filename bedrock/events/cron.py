@@ -23,7 +23,7 @@ def update_reps_ical():
     # and fail silently.
     # http://bugzil.la/1129961
     try:
-        resp = requests.get(settings.REPS_ICAL_FEED, verify=False)
+        resp = requests.get(settings.REPS_ICAL_FEED, verify=False, timeout=60)
         if resp.status_code == 200:
             Event.objects.sync_with_ical(resp.text)
             return
