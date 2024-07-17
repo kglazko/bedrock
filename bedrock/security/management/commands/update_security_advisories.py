@@ -18,6 +18,7 @@ from dateutil.parser import parse as parsedate
 
 from bedrock.security.models import Product, SecurityAdvisory
 from bedrock.security.utils import FILENAME_RE, chdir, parse_md_file
+from security import safe_command
 
 
 ADVISORIES_REPO = settings.MOFO_SECURITY_ADVISORIES_REPO
@@ -69,7 +70,7 @@ def git_pull():
 @chdir(ADVISORIES_PATH)
 def git_diff(old_hash, new_hash):
     if old_hash != new_hash:
-        proc = Popen((GIT, 'diff', '--name-only', old_hash, new_hash), stdout=PIPE)
+        proc = safe_command.run(Popen, (GIT, 'diff', '--name-only', old_hash, new_hash), stdout=PIPE)
         git_out = proc.communicate()[0].split()
         return filter_advisory_filenames(git_out)
 
@@ -92,7 +93,7 @@ def update_repo():
 
 @chdir(ADVISORIES_PATH)
 def get_current_git_hash():
-    p = Popen(GIT_GET_HASH, stdout=PIPE)
+    p = safe_command.run(Popen, GIT_GET_HASH, stdout=PIPE)
     return p.communicate()[0].strip()
 
 
