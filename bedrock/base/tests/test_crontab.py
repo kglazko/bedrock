@@ -9,6 +9,7 @@ import chkcrontab_lib as chkcrontab
 
 from bedrock.mozorg.tests import TestCase
 from bedrock.settings.base import path
+from security import safe_command
 
 
 CRONTAB_FILE_NAMES = ['bedrock-dev', 'bedrock-stage', 'bedrock-prod']
@@ -21,7 +22,7 @@ class TestCrontabFiles(TestCase):
     @classmethod
     def setUpClass(cls):
         for cron_file in CRONTAB_FILE_NAMES:
-            call([path('bin', 'gen-crons.py'), '-t', cron_file, '-w', '/path/to/www',
+            safe_command.run(call, [path('bin', 'gen-crons.py'), '-t', cron_file, '-w', '/path/to/www',
                   '-s', '/path/to/src'])
 
     @classmethod
