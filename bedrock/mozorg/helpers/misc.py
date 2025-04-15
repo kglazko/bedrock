@@ -1,7 +1,6 @@
 from __future__ import unicode_literals
 
 from os.path import splitext
-import random
 import urlparse
 from os import path
 
@@ -14,6 +13,7 @@ import jingo
 import jinja2
 from bedrock.base.urlresolvers import reverse
 from bedrock.base.helpers import static
+import secrets
 
 
 ALL_FX_PLATFORMS = ('windows', 'linux', 'mac', 'android', 'ios')
@@ -506,7 +506,7 @@ def htmlattr(_list, **kwargs):
 @jingo.register.filter
 def shuffle(_list):
     """Return a shuffled list"""
-    random.shuffle(_list)
+    secrets.SystemRandom().shuffle(_list)
     return _list
 
 
