@@ -261,7 +261,7 @@ def process_partnership_form(request, template, success_url_name, template_vars=
                                   'partnerships?success=1')
 
                 r = requests.post('https://www.salesforce.com/servlet/'
-                                  'servlet.WebToLead?encoding=UTF-8', data)
+                                  'servlet.WebToLead?encoding=UTF-8', data, timeout=60)
                 msg = requests.status_codes._codes.get(r.status_code, ['error'])[0]
                 stat = r.status_code
 
@@ -344,7 +344,7 @@ def process_content_services_form(request, template, success_url_name, template_
                                   'contentservices/start?success=1')
 
                 r = requests.post('https://www.salesforce.com/servlet/'
-                                  'servlet.WebToLead?encoding=UTF-8', data)
+                                  'servlet.WebToLead?encoding=UTF-8', data, timeout=60)
                 msg = requests.status_codes._codes.get(r.status_code, ['error'])[0]
                 stat = r.status_code
 
