@@ -6,10 +6,10 @@
 from django.conf import settings
 
 import cronjobs
-import requests
 import logging
 
 from bedrock.events.models import Event
+from security import safe_requests
 
 logger = logging.getLogger(__name__)
 
@@ -23,7 +23,7 @@ def update_reps_ical():
     # and fail silently.
     # http://bugzil.la/1129961
     try:
-        resp = requests.get(settings.REPS_ICAL_FEED, verify=False)
+        resp = safe_requests.get(settings.REPS_ICAL_FEED, verify=False)
         if resp.status_code == 200:
             Event.objects.sync_with_ical(resp.text)
             return
