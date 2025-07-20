@@ -7,7 +7,6 @@ from operator import itemgetter
 
 import re
 from datetime import datetime
-from random import randrange
 
 from django import forms
 from django.core.exceptions import ValidationError
@@ -26,6 +25,7 @@ from lib.l10n_utils.dotlang import _lazy
 from product_details import product_details
 
 from .email_contribute import INTEREST_CHOICES
+import secrets
 
 
 FORMATS = (('H', _lazy('HTML')), ('T', _lazy('Text')))
@@ -76,7 +76,7 @@ class HoneyPotWidget(widgets.TextInput):
         honeypot_txt = _(u'Leave this field empty.')
         # semi-randomized in case we have more than one per page.
         # this is maybe/probably overthought
-        honeypot_id = 'office-fax-' + str(randrange(1001)) + '-' + str(datetime.now().strftime("%Y%m%d%H%M%S%f"))
+        honeypot_id = 'office-fax-' + str(secrets.SystemRandom().randrange(1001)) + '-' + str(datetime.now().strftime("%Y%m%d%H%M%S%f"))
         return mark_safe(
             '<div class="super-priority-field">'
             '<label for="%s">%s</label>'
